@@ -53,3 +53,18 @@ Once all dependencies are met, you can install mahimahi by running:
  * `make`
  * `sudo make install`
 
+### Notes
+
+How to access internet from mahimahi box:
+
+1. Setup NAT
+
+```bash
+sudo iptables -t nat -I POSTROUTING 1 -s 10.0.0.0/24 -j MASQUERADE
+```
+2.  Setup FORWARD for `delay-xxxxx`
+
+```bash
+sudo iptables -I FORWARD 1 -i delay+ -j ACCEPT
+sudo iptables -I FORWARD 1 -o delay+ -j ACCEPT                                                                                                          
+```
