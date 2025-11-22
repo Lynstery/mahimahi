@@ -37,6 +37,29 @@ bool IIDLoss::drop_packet( const string & packet __attribute((unused)) )
     return drop_dist_( prng_ );
 }
 
+bool GELoss::drop_packet(const string & packet __attribute((unused)))
+{
+    // 1. Markov chain state transition
+    if (!bad_state_) {
+        // currently in Good state
+        if (dist_g_to_b_(prng_)) {
+            bad_state_ = true;
+        }
+    } else {
+        // currently in Bad state
+        if (dist_b_to_g_(prng_)) {
+            bad_state_ = false;
+        }
+    }
+
+    // 2. Apply loss probability based on current state
+    if (!bad_state_) {
+        return drop_good_(prng_);
+    } else {
+        return drop_bad_(prng_);
+    }
+}
+
 static const double MS_PER_SECOND = 1000.0;
 
 StochasticSwitchingLink::StochasticSwitchingLink( const double mean_on_time, const double mean_off_time )

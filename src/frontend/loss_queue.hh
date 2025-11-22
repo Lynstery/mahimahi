@@ -46,6 +46,28 @@ public:
     IIDLoss( const double loss_rate ) : drop_dist_( loss_rate ) {}
 };
 
+class GELoss : public LossQueue
+{
+private:
+    bool bad_state_;    // true = bad state, false = good state
+
+    std::bernoulli_distribution dist_g_to_b_;
+    std::bernoulli_distribution dist_b_to_g_;
+    std::bernoulli_distribution drop_good_;
+    std::bernoulli_distribution drop_bad_;
+
+    bool drop_packet(const std::string & packet) override;
+
+public:
+    GELoss(const double p_gb, const double p_bg, const double p_good, const double p_bad)
+        : bad_state_(false),
+          dist_g_to_b_(p_gb),
+          dist_b_to_g_(p_bg),
+          drop_good_(p_good),
+          drop_bad_(p_bad)
+    {}
+};
+
 class StochasticSwitchingLink : public LossQueue
 {
 private:
