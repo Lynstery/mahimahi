@@ -53,9 +53,22 @@ Once all dependencies are met, you can install mahimahi by running:
  * `make`
  * `sudo make install`
 
+### Usage
+
+see [mahimahi usage](http://mahimahi.mit.edu/#usage)
+
+Example:
+```bash
+mm-delay 50 mm-link trace_up.pps trace_down.pps mm-ge-loss uplink 0.05 0.8 0.02 0.5
+```
+
 ### Notes
 
-How to access internet from mahimahi box:
+**Mahimahi shell prefix**:
+
+Mahimahi will modify `$MAHIMAHI_SHELL_PREFIX` and `$PS1` to display the current status. If you use `zsh`, it may not display correctly because zsh does not use `$PS1` in the same way. You can manually run `echo $MAHIMAHI_SHELL_PREFIX` to see the status.
+
+**How to access internet from mahimahi box**:
 
 1. Setup NAT
 
