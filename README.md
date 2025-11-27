@@ -75,9 +75,14 @@ Mahimahi will modify `$MAHIMAHI_SHELL_PREFIX` and `$PS1` to display the current 
 ```bash
 sudo iptables -t nat -I POSTROUTING 1 -s 10.0.0.0/24 -j MASQUERADE
 ```
-2.  Setup FORWARD for `delay-xxxxx`
+
+2.  Setup FORWARD
 
 ```bash
 sudo iptables -I FORWARD 1 -i delay+ -j ACCEPT
-sudo iptables -I FORWARD 1 -o delay+ -j ACCEPT                                                                                                          
+sudo iptables -I FORWARD 1 -o delay+ -j ACCEPT
+sudo iptables -I FORWARD 1 -i loss+ -j ACCEPT
+sudo iptables -I FORWARD 1 -o loss+ -j ACCEPT
+sudo iptables -I FORWARD 1 -i link+ -j ACCEPT
+sudo iptables -I FORWARD 1 -o link+ -j ACCEPT
 ```
